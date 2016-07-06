@@ -6,10 +6,11 @@ run(){
 }
 
 upload_image_to_slack(){
-  local filepath="$1"
+  local filename="$1"
+  local filepath="$2"
 
   chmod +x ./upload-image-to-slack
-  ./upload-image-to-slack < $filepath
+  ./upload-image-to-slack --filename "$filename" < $filepath
 }
 
 upload_images_to_slack(){
@@ -21,8 +22,8 @@ upload_images_to_slack(){
   fi
 
   chmod -R 777 images
-  for filepath in $(ls images); do
-    upload_image_to_slack "images/${filepath}"
+  for filename in $(ls images); do
+    upload_image_to_slack "$filename" "images/${filename}"
   done
 }
 
